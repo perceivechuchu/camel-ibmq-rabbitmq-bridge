@@ -1,0 +1,29 @@
+﻿version: '3.8'
+services:
+
+  camel-ibm-messaging:
+    image: icr.io/ibm-messaging/mq
+    container_name: 'camel-ibm-messaging'
+    environment:
+      - LICENSE=accept
+      - MQ_QMGR_NAME=QM1
+    volumes:
+       - qm1data:/mnt/mqm
+    ports:
+        - 1414:1414
+        - 9443:9443
+    networks:
+      - camel-network
+  
+  camel-ibmq-rabbitmq-bridge:
+    build: .
+    container_name: camel-ibmq-rabbitmq-bridge
+    networks:
+      - camel-network
+      
+volumes:
+  qm1data:
+
+networks:
+  camel-network:
+    driver: bridge

@@ -29,7 +29,7 @@ public class QueueBridgeConfig {
                     ((MQConnectionFactory) connectionFactory).setQueueManager("QM1");
                     ((MQConnectionFactory) connectionFactory).setTransportType(1);
                     ((MQConnectionFactory) connectionFactory).setPort(1414);
-                    ((MQConnectionFactory) connectionFactory).setHostName("localhost");
+                    ((MQConnectionFactory) connectionFactory).setHostName("camel-ibm-messaging");
                     ((MQConnectionFactory) connectionFactory).setChannel("DEV.APP.SVRCONN");
                 } catch (JMSException e) {
                     e.printStackTrace();
