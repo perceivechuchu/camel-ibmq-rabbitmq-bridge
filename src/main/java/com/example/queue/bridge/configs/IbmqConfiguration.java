@@ -1,5 +1,7 @@
 package com.example.queue.bridge.configs;
 
+import java.util.logging.Logger;
+
 import javax.jms.ConnectionFactory;
 import javax.jms.JMSException;
 
@@ -7,6 +9,7 @@ import org.apache.camel.CamelContext;
 import org.apache.camel.component.jms.JmsComponent;
 import org.apache.camel.spring.boot.CamelContextConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jms.connection.UserCredentialsConnectionFactoryAdapter;
@@ -19,6 +22,23 @@ public class IbmqConfiguration {
     @Autowired
     CamelContext camelContext;
     
+    @Value("${ibmq.host}")
+	private String ibmqHost;
+    
+    @Value("${ibmq.port}")
+	private int ibmqPort;
+    
+    @Value("${ibmq.queue-manager}")
+	private String ibmqManager;
+    
+    @Value("${ibmq.queue-connection-type}")
+	private int ibmqConnectionType;
+    
+    @Value("${ibmq.channel}")
+	private String ibmqChannel;
+    
+    static Logger logger = Logger.getLogger(IbmqConfiguration.class.getName());
+    
     @Bean
     CamelContextConfiguration contextConfiguration() {
         return new CamelContextConfiguration() {
@@ -27,13 +47,13 @@ public class IbmqConfiguration {
 
                 ConnectionFactory connectionFactory = new MQConnectionFactory();
                 try {
-                    ((MQConnectionFactory) connectionFactory).setQueueManager("QM1");
-                    ((MQConnectionFactory) connectionFactory).setTransportType(1);
-                    ((MQConnectionFactory) connectionFactory).setPort(1414);
-                    ((MQConnectionFactory) connectionFactory).setHostName("camel-ibm-messaging");
-                    ((MQConnectionFactory) connectionFactory).setChannel("DEV.APP.SVRCONN");
+                    ((MQConnectionFactory) connectionFactory).setQueueManager(ibmqManager);
+                    ((MQConnectionFactory) connectionFactory).setTransportType(ibmqConnectionType);
+                    ((MQConnectionFactory) connectionFactory).setPort(ibmqPort);
+                    ((MQConnectionFactory) connectionFactory).setHostName(ibmqHost);
+                    ((MQConnectionFactory) connectionFactory).setChannel(ibmqChannel);
                 } catch (JMSException e) {
-                    e.printStackTrace();
+                	logger.severe("Failed to initialize IBM MQ connection.");
                 }
 
                 UserCredentialsConnectionFactoryAdapter connectionFactoryAdapter=new UserCredentialsConnectionFactoryAdapter();
@@ -42,13 +62,11 @@ public class IbmqConfiguration {
                 connectionFactoryAdapter.setPassword("");
 
                 context.addComponent("wmq", JmsComponent.jmsComponentAutoAcknowledge(connectionFactoryAdapter));
-
-                System.setProperty("hawtio.authenticationEnabled", "false");
             }
 
             @Override
             public void afterApplicationStart(CamelContext camelContext) {
-                // Do nothing
+            	logger.severe("Application successfully started.");
             }
         };
     }
