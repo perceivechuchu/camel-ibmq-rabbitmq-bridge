@@ -1,6 +1,8 @@
 package com.example.queue.bridge.configs;
 
-import com.ibm.mq.jms.MQConnectionFactory;
+import javax.jms.ConnectionFactory;
+import javax.jms.JMSException;
+
 import org.apache.camel.CamelContext;
 import org.apache.camel.component.jms.JmsComponent;
 import org.apache.camel.spring.boot.CamelContextConfiguration;
@@ -9,15 +11,14 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jms.connection.UserCredentialsConnectionFactoryAdapter;
 
-import javax.jms.ConnectionFactory;
-import javax.jms.JMSException;
+import com.ibm.mq.jms.MQConnectionFactory;
 
 @Configuration
-public class QueueBridgeConfig {
+public class IbmqConfiguration {
 
     @Autowired
     CamelContext camelContext;
-
+    
     @Bean
     CamelContextConfiguration contextConfiguration() {
         return new CamelContextConfiguration() {

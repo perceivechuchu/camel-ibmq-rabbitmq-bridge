@@ -8,10 +8,21 @@ services:
       - LICENSE=accept
       - MQ_QMGR_NAME=QM1
     volumes:
-       - qm1data:/mnt/mqm
+      - qm1data:/mnt/mqm
     ports:
-        - 1414:1414
-        - 9443:9443
+      - 1414:1414
+      - 9443:9443
+    networks:
+      - camel-network
+      
+  camel-rabbitmq-messaging:
+    image: rabbitmq:3-management-alpine
+    container_name: 'camel-rabbitmq-messaging'
+    volumes:
+      - rabbitmq-data:/var/lib/rabbitmq
+    ports:
+      - 5672:5672
+      - 15672:15672
     networks:
       - camel-network
   
@@ -23,6 +34,7 @@ services:
       
 volumes:
   qm1data:
+  rabbitmq-data:
 
 networks:
   camel-network:
