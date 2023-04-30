@@ -1,4 +1,4 @@
-package com.example.queue.bridge.configs;
+package com.example.camel.queue.bridge.configs;
 
 import java.util.logging.Logger;
 
@@ -66,7 +66,7 @@ public class IbmqConfiguration {
 
             @Override
             public void afterApplicationStart(CamelContext camelContext) {
-            	logger.severe("Application successfully started.");
+            	logger.info("Application successfully started.");
             }
         };
     }

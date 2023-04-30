@@ -1,10 +1,12 @@
-package com.example.queue.bridge.configs;
+package com.example.camel.queue.bridge.configs;
 
 import org.apache.camel.CamelContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import com.rabbitmq.client.ConnectionFactory;
 
 @Configuration
 public class RabbitmqConfiguration {
@@ -27,8 +29,8 @@ public class RabbitmqConfiguration {
 	public static final String RABBIT_URI = "rabbitmq:amq.direct?queue=bridge-test.queue&routingKey=bridge-test.routing.queue&autoDelete=false";
 
 	@Bean
-	public com.rabbitmq.client.ConnectionFactory rabbitConnectionFactory() {
-		com.rabbitmq.client.ConnectionFactory factory = new com.rabbitmq.client.ConnectionFactory();
+	public ConnectionFactory rabbitConnectionFactory() {
+		ConnectionFactory factory = new ConnectionFactory();
 		factory.setHost(rabbitmqHost);
 		factory.setPort(rabbitmqPort);
 		factory.setUsername(rabbitmqUsername);

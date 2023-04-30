@@ -1,4 +1,4 @@
-package com.example.queue.bridge;
+package com.example.camel.queue.bridge;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
@@ -16,11 +16,7 @@ public class QueueBridgeApplication {
 
     @Bean
     public CommandLineRunner commandLineRunner(ApplicationContext ctx) {
-        return args -> {
-
-            // Do nothing
-
-        };
+        return args -> {};
     }
 
 }

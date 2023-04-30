@@ -31,6 +31,9 @@ services:
     container_name: camel-ibmq-rabbitmq-bridge
     networks:
       - camel-network
+    links:
+      - camel-ibm-messaging
+      - camel-rabbitmq-messaging
       
 volumes:
   qm1data:

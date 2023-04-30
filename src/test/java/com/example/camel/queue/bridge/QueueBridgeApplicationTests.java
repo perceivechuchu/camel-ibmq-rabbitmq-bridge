@@ -1,4 +1,4 @@
-package com.example.queue.bridge;
+package com.example.camel.queue.bridge;
 
 import org.junit.Test;
 import org.springframework.test.context.ContextConfiguration;
